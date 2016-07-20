@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kirja.xxx.reader.Persons.Person;
+import com.kirja.xxx.reader.Persons.Teenager;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -24,6 +27,8 @@ public class TagReader extends AppCompatActivity {
     TextView textViewInfo, textViewTagInfo;
     LinearLayout linearLayout;
     Speech speech;
+    Person person;
+
     final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
@@ -35,8 +40,9 @@ public class TagReader extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.data);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        speech = new Speech(this.getApplicationContext());
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        //speech = new Speech(this.getApplicationContext());
+        person = new Teenager(this.getApplicationContext());
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
@@ -81,16 +87,16 @@ public class TagReader extends AppCompatActivity {
 
             @Override
             public void run() {
-                speech.talk("minä puhun suomea");
-                Log.i("talk", "not");
+                if (JSONHandler.json != null) person.speak();
+                else person.chat();
             }
         }, 0, 20, TimeUnit.SECONDS);
 
     }
-
 /*
+    @Override
     public void onPause(){
-        speech.shutUp();
+        person.shutUp();
         super.onPause();
         executorService.shutdown();
     }
@@ -124,7 +130,7 @@ public class TagReader extends AppCompatActivity {
             tv.setText(isbn);
             linearLayout.addView(tv);
             APICall ac = new APICall();
-            ac.getData(this.getApplicationContext(), isbn);
+            ac.getData(this.getApplicationContext(), isbn, person);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Lukeminen epäonnistui!", Toast.LENGTH_SHORT).show();
             return;

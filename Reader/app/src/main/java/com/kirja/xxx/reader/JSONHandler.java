@@ -7,23 +7,40 @@ import org.json.JSONObject;
 
 public class JSONHandler {
 
-    JSONObject json;
+    public static JSONObject json;
+    public static JSONArray records;
 
     public JSONHandler(String result) {
         try {
             json = new JSONObject(result);
-            JSONArray records = json.getJSONArray("records");
-            JSONObject authorarray = new JSONObject(records.getJSONObject(0).getString("nonPresenterAuthors"));
-            JSONArray authors = json.getJSONArray("nonPresenterAuthors");
-            //String author = authorarray.getJSONObject(0).getString("name");
-            String title = records.getJSONObject(0).getString("title");
-            Log.i("title", title);
-        }
-        catch (Exception e){
+            records = json.getJSONArray("records");
+        } catch (Exception e) {
             Log.e("JSON error", e.toString());
         }
     }
- // convert String to JSONObject
-    //JSONArray industryIdentifiers = json.getJSONArray("industryIdentifiers"); // get articles array
-    //industryIdentifiers.getJSONObject(0).getString("pageCount") // return an article url
+
+    //TODO: returns just the first author name in case of more authors in one title
+    public static String getAuthor() {
+        try {
+            JSONArray authors = records.getJSONObject(0).getJSONArray("nonPresenterAuthors");
+            return authors.getJSONObject(0).getString("name");
+        } catch (Exception e) {
+            Log.e("JSON error", e.toString());
+        }
+        return ""; //returns empty String for Speech class
+    }
+
+    public static String getTitle() {
+        try {
+            return records.getJSONObject(0).getString("title");
+        } catch (Exception e) {
+            Log.e("JSON error", e.toString());
+        }
+        return ""; //returns empty String for Speech class
+    }
+
+    //TODO:
+    public static String getPageNumber() {
+        return null;
+    }
 }

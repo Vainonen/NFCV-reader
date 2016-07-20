@@ -1,11 +1,14 @@
 package com.kirja.xxx.reader;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.kirja.xxx.reader.Persons.Person;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -23,12 +26,15 @@ import java.net.URL;
 public class APICall {
 
     Context context;
+    Person person;
 
-    public void getData(Context c, String isbn) {
+    public void getData(Context c, String isbn, Person p) {
         //String url = "https://www.googleapis.com/books/v1/volumes?q=ISBN:" + isbn;
         //https://api.finna.fi/v1/search?lookfor=9789520110727&field[]=fullRecord
         String url = "https://api.finna.fi/v1/search?lookfor=" + isbn;
         context = c;
+        person = p;
+
         if (!isConnected())
             Toast.makeText(context,
                     "Verkkoyhteys ei toimi!", Toast.LENGTH_LONG).show();
@@ -77,7 +83,7 @@ public class APICall {
             } catch (Exception e) {
                 Log.e("Error", e.getLocalizedMessage());
             }
-            Log.i("result", result);
+
             return result;
 
         }
@@ -87,7 +93,7 @@ public class APICall {
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
             JSONHandler jh = new JSONHandler(result);
-            Log.i("result", result);
+            person.speak();
         }
     }
 }
