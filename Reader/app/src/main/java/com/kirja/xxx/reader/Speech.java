@@ -8,29 +8,27 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-public class Speech extends Activity {
-    TextToSpeech t1;
+public class Speech implements TextToSpeech.OnInitListener {
+    TextToSpeech tts;
 
     public Speech(Context context) {
-
-        t1 = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status != TextToSpeech.ERROR) {
-                    t1.setLanguage(Locale.UK);
-                }
-            }
-        });
+        tts = new TextToSpeech(context, this);
     }
 
-    public void talk() {
-        String toSpeak = "hei";
+    @Override
+    public void onInit(int status) {
+        if(status != TextToSpeech.ERROR){
+            tts.setLanguage(new Locale("fi"));
+        }
+    }
+    public void talk(String text) {
+        /*
         float speed = 1;
         float pitch = 1;
         t1.setSpeechRate(speed);
         t1.setPitch(pitch);
-        Toast.makeText(getApplicationContext(), toSpeak, Toast.LENGTH_SHORT).show();
-        t1.speak("hei", TextToSpeech.QUEUE_ADD, null);
+        */
+        //tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 /*
     public void shutUp() {

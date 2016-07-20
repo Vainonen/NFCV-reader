@@ -81,10 +81,10 @@ public class TagReader extends AppCompatActivity {
 
             @Override
             public void run() {
-                speech.talk();
+                speech.talk("minä puhun suomea");
                 Log.i("talk", "not");
             }
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 20, TimeUnit.SECONDS);
 
     }
 
@@ -123,7 +123,8 @@ public class TagReader extends AppCompatActivity {
             TextView tv = new TextView(this);
             tv.setText(isbn);
             linearLayout.addView(tv);
-
+            APICall ac = new APICall();
+            ac.getData(this.getApplicationContext(), isbn);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Lukeminen epäonnistui!", Toast.LENGTH_SHORT).show();
             return;

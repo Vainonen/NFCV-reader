@@ -4,6 +4,8 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    useLibrary 'org.apache.http.legacy' //for HttpClient
+
     defaultConfig {
         applicationId "com.kirja.xxx.reader"
         minSdkVersion 15
