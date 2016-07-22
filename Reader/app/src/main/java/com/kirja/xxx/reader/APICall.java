@@ -26,14 +26,12 @@ import java.net.URL;
 public class APICall {
 
     Context context;
-    Person person;
 
-    public void getData(Context c, String isbn, Person p) {
+    public void getData(Context c, String isbn) {
         //String url = "https://www.googleapis.com/books/v1/volumes?q=ISBN:" + isbn;
         //https://api.finna.fi/v1/search?lookfor=9789520110727&field[]=fullRecord
         String url = "https://api.finna.fi/v1/search?lookfor=" + isbn;
         context = c;
-        person = p;
 
         if (!isConnected())
             Toast.makeText(context,
@@ -63,16 +61,6 @@ public class APICall {
                 //connection.setConnectTimeout (1000);
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
 
-
-        /*
-        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line + "\n");
-        }
-        */
-
                 if (inputStream != null) {
                     String line = "";
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -93,7 +81,7 @@ public class APICall {
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
             JSONHandler jh = new JSONHandler(result);
-            person.speak();
+            MainActivity.person.speak();
         }
     }
 }

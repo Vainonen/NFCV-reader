@@ -1,19 +1,19 @@
 package com.kirja.xxx.reader.Persons;
 
-import android.app.Activity;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 
 import com.kirja.xxx.reader.JSONHandler;
 
 import java.util.Locale;
 
-public class Teenager implements Person {
+public class Fan implements Person {
 
     TextToSpeech tts;
+    int counter;
 
-    public Teenager(Context context) {
+    public Fan(Context context) {
+        counter = 0;
         tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -24,8 +24,8 @@ public class Teenager implements Person {
         });
         float speed = 1;
         float pitch = 1;
-        tts.setSpeechRate(speed/(2/3));
-        tts.setPitch(pitch/(2/3));
+        tts.setSpeechRate(speed / 2);
+        tts.setPitch(pitch / 2);
     }
 
     @Override
@@ -34,26 +34,24 @@ public class Teenager implements Person {
         if (JSONHandler.json != null) s = JSONHandler.getTitle();
         JSONHandler.json = null;
         //tts.stop();
+        if (!s.equals("Steel, Danielle")) s = "Tämä ei ole Danielle Steel";
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
     }
 
-    public void chat() {
-        String s = "Anna jotain luettavaa";
-        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
-    }
-/*
     @Override
-    public void speakResult(JSONHandler jh) {
-        float speed = 1;
-        float pitch = 1;
-        tts.setSpeechRate(speed);
-        tts.setPitch(pitch);
-        String speech = jh.getTitle();
-        tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-        Log.i("puhe", speech);
-    }
-*/
+    public void chat() {
+        String s = "";
+        if (counter == 0) {
+            s = "Tuokaa minulle Danielle Steel";
+            counter++;
+        }
+        else {
+            s = "Missä viipyy Danielle Steel";
+            counter = 0;
+        }
 
+        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+    }
 
     @Override
     public void shutUp() {

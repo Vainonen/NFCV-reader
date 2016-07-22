@@ -26,8 +26,7 @@ public class TagReader extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     TextView textViewInfo, textViewTagInfo;
     LinearLayout linearLayout;
-    Speech speech;
-    Person person;
+    //private Person person;
 
     final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -42,7 +41,7 @@ public class TagReader extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         //speech = new Speech(this.getApplicationContext());
-        person = new Teenager(this.getApplicationContext());
+        //this.person = new Teenager(this.getApplicationContext());
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
@@ -87,20 +86,33 @@ public class TagReader extends AppCompatActivity {
 
             @Override
             public void run() {
-                if (JSONHandler.json != null) person.speak();
-                else person.chat();
+                MainActivity.person.chat();
+                //if (!MainActivity.person.speaking()) MainActivity.person.chat();
             }
-        }, 0, 20, TimeUnit.SECONDS);
+        }, 0, 10, TimeUnit.SECONDS);
+/*
+        long start = System.currentTimeMillis();
+        Log.i("aika", String.valueOf(start));
+        while (true) {
+            if (System.currentTimeMillis() - start > 10000) {
+                person.speak();
+                Log.i("aika2", String.valueOf(start));
+                start = System.currentTimeMillis();
+            }
+        }
+        */
+
 
     }
-/*
+
+
     @Override
     public void onPause(){
-        person.shutUp();
+        //MainActivity.person.shutUp();
         super.onPause();
         executorService.shutdown();
     }
-*/
+
     private void getData(Tag tag) {
         NfcV nfcv = NfcV.get(tag);
 
@@ -130,7 +142,7 @@ public class TagReader extends AppCompatActivity {
             tv.setText(isbn);
             linearLayout.addView(tv);
             APICall ac = new APICall();
-            ac.getData(this.getApplicationContext(), isbn, person);
+            ac.getData(this.getApplicationContext(), isbn);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Lukeminen epäonnistui!", Toast.LENGTH_SHORT).show();
             return;
