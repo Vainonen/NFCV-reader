@@ -26,22 +26,21 @@ public class TagReader extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     TextView textViewInfo, textViewTagInfo;
     LinearLayout linearLayout;
-    //private Person person;
 
     final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_reading);
         textViewInfo = (TextView) findViewById(R.id.info);
         textViewTagInfo = (TextView) findViewById(R.id.info);
         linearLayout = (LinearLayout) findViewById(R.id.data);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        //speech = new Speech(this.getApplicationContext());
-        //this.person = new Teenager(this.getApplicationContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        MainActivity.person.chat();
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
@@ -89,20 +88,7 @@ public class TagReader extends AppCompatActivity {
                 MainActivity.person.chat();
                 //if (!MainActivity.person.speaking()) MainActivity.person.chat();
             }
-        }, 0, 10, TimeUnit.SECONDS);
-/*
-        long start = System.currentTimeMillis();
-        Log.i("aika", String.valueOf(start));
-        while (true) {
-            if (System.currentTimeMillis() - start > 10000) {
-                person.speak();
-                Log.i("aika2", String.valueOf(start));
-                start = System.currentTimeMillis();
-            }
-        }
-        */
-
-
+        }, 10, 15, TimeUnit.SECONDS);
     }
 
 

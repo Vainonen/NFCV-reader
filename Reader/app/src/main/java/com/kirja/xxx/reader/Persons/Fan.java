@@ -2,6 +2,7 @@ package com.kirja.xxx.reader.Persons;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 
 import com.kirja.xxx.reader.JSONHandler;
 
@@ -22,9 +23,8 @@ public class Fan implements Person {
                 }
             }
         });
-        float speed = 1;
+
         float pitch = 1;
-        tts.setSpeechRate(speed / 2);
         tts.setPitch(pitch / 2);
     }
 
@@ -34,20 +34,31 @@ public class Fan implements Person {
         if (JSONHandler.json != null) s = JSONHandler.getTitle();
         JSONHandler.json = null;
         //tts.stop();
-        if (!s.equals("Steel, Danielle")) s = "Tämä ei ole Danielle Steel";
+        tts.setSpeechRate(1 / 2);
+        if (s.equals("Steel, Danielle")) s = "Tämä ei ole Daniel le Steell";
+        else {
+            s = "aaaaaaaaah!";
+            tts.setSpeechRate(1 / (2 / 3));
+            tts.setPitch(1 / (2 / 3));
+        }
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+        tts.setPitch(1 / 2);
     }
 
     @Override
     public void chat() {
         String s = "";
         if (counter == 0) {
-            s = "Tuokaa minulle Danielle Steel";
+            s = "Tuokaa minulle. Daniel le Steell";
             counter++;
+            tts.setSpeechRate(1 / 2);
+            Log.i("order", "eka");
         }
         else {
-            s = "Missä viipyy Danielle Steel";
+            s = "Missä viipyy        Danielle Steel?";
+            Log.i("order", "toka");
             counter = 0;
+            tts.setSpeechRate(1);
         }
 
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);

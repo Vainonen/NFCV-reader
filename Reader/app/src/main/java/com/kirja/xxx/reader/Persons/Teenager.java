@@ -24,8 +24,8 @@ public class Teenager implements Person {
         });
         float speed = 1;
         float pitch = 1;
-        tts.setSpeechRate(speed/(2/3));
-        tts.setPitch(pitch/(2/3));
+        tts.setSpeechRate(speed);
+        tts.setPitch(pitch);
     }
 
     @Override
