@@ -51,8 +51,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         rb[0].setText("Teini");
         rb[1].setText("Romantikko");
-
     }
+
+    /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NOT NEEDED?
+    }
+    */
 
     @Override
     public void onClick(View v) {

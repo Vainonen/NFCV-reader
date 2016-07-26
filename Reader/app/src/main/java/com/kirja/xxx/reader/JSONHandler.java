@@ -5,12 +5,15 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class JSONHandler {
 
     public static JSONObject json;
     public static JSONArray records;
 
     public JSONHandler(String result) {
+        Log.i("result", result);
         try {
             json = new JSONObject(result);
             records = json.getJSONArray("records");
@@ -42,5 +45,15 @@ public class JSONHandler {
     //TODO:
     public static String getPageNumber() {
         return null;
+    }
+
+    public static String getLanguage() {
+        try {
+            JSONArray languages = records.getJSONObject(0).getJSONArray("languages");
+            return languages.getString(0);
+        } catch (Exception e) {
+            Log.e("JSON error", e.toString());
+        }
+        return ""; //returns empty String for Speech class
     }
 }

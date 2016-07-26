@@ -40,7 +40,7 @@ public class TagReader extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        MainActivity.person.chat();
+        //MainActivity.person.chat();
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
@@ -124,6 +124,7 @@ public class TagReader extends AppCompatActivity {
             // ISBN location on the NFCV tag:
             userdata = Arrays.copyOfRange(userdata, 24, 30);
             String isbn = new BigInteger(userdata).toString();
+            MainActivity.person.addISBN(isbn);
             TextView tv = new TextView(this);
             tv.setText(isbn);
             linearLayout.addView(tv);

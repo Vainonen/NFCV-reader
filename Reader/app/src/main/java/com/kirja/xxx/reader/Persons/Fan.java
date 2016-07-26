@@ -11,21 +11,22 @@ import java.util.Locale;
 public class Fan implements Person {
 
     TextToSpeech tts;
-    int counter;
+    int counter = 0;
 
     public Fan(Context context) {
-        counter = 0;
+
         tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if (status != TextToSpeech.ERROR) {
+                if (status == TextToSpeech.SUCCESS) {
                     tts.setLanguage(new Locale("fi"));
+                    float speed = 0.5f;
+                    float pitch = 0.5f;
+                    tts.setSpeechRate(speed);
+                    tts.setPitch(pitch);
                 }
             }
         });
-
-        float pitch = 1;
-        tts.setPitch(pitch / 2);
     }
 
     @Override
@@ -34,15 +35,15 @@ public class Fan implements Person {
         if (JSONHandler.json != null) s = JSONHandler.getTitle();
         JSONHandler.json = null;
         //tts.stop();
-        tts.setSpeechRate(1 / 2);
+        tts.setSpeechRate(0.5f);
         if (s.equals("Steel, Danielle")) s = "Tämä ei ole Daniel le Steell";
         else {
-            s = "aaaaaaaaah!";
-            tts.setSpeechRate(1 / (2 / 3));
-            tts.setPitch(1 / (2 / 3));
+            s = "aaaaaaaaaaaaaaaaaaah!";
+            tts.setSpeechRate(1.0f);
+            tts.setPitch(2.0f);
         }
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
-        tts.setPitch(1 / 2);
+        tts.setPitch(0.5f);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class Fan implements Person {
         if (counter == 0) {
             s = "Tuokaa minulle. Daniel le Steell";
             counter++;
-            tts.setSpeechRate(1 / 2);
+            tts.setSpeechRate(0.5f);
             Log.i("order", "eka");
         }
         else {
@@ -73,8 +74,7 @@ public class Fan implements Person {
     }
 
     @Override
-    public boolean speaking() {
-        if (tts.isSpeaking()) return true;
-        return false;
+    public void addISBN(String isbn) {
+        //not necessary property for this class
     }
 }
