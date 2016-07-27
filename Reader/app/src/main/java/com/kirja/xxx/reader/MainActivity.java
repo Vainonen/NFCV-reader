@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             rg.addView(rb[i]);
             rb[i].setOnClickListener(this);
             rb[i].setId(i);
+            rb[i].setTextSize(30);
         }
         rb[0].setText("Teini");
         rb[1].setText("Romantikko");

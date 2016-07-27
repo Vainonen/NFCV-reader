@@ -88,15 +88,22 @@ public class TagReader extends AppCompatActivity {
                 MainActivity.person.chat();
                 //if (!MainActivity.person.speaking()) MainActivity.person.chat();
             }
-        }, 10, 15, TimeUnit.SECONDS);
+        }, 0, 10, TimeUnit.SECONDS);
     }
 
 
     @Override
     public void onPause(){
-        //MainActivity.person.shutUp();
         super.onPause();
+        MainActivity.person.shutUp();
         executorService.shutdown();
+        /*
+        try {
+            executorService.awaitTermination(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Log.e("InterruptedException", e.toString());
+        }
+        */
     }
 
     private void getData(Tag tag) {

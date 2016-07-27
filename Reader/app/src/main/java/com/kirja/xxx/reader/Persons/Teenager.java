@@ -41,7 +41,8 @@ public class Teenager implements Person {
             s = JSONHandler.getAuthor();
             StringReverser sh = new StringReverser(s);
             s = sh.getReversedName();
-            s += JSONHandler.getTitle();
+            s += "..." + JSONHandler.getTitle();
+            s +="... Mikä vithy tää on";
         }
         JSONHandler.json = null;
         try {

@@ -10,19 +10,43 @@ public class StringReverser {
         result = s;
     }
 
-        //Reverses first name and surname to correct order
-        public String getReversedName() {
-            StringBuilder firstName = new StringBuilder("");
-            StringBuilder surname = new StringBuilder("");
-            boolean pointer = false; //indicates when reading first name
-            for (int i = 0; i < result.length(); i++) {
-                char c = result.charAt(i);
-                if (result.charAt(i) == ',') pointer = true;
-                if (pointer) firstName.append(c);
-                else surname.append(c);
-                }
-            return firstName.toString() + surname.toString();
+    //Reverses first name and surname to correct order
+    public String getReversedName() {
+        StringBuilder firstName = new StringBuilder("");
+        StringBuilder surname = new StringBuilder("");
+        boolean pointer = false; //indicates when reading first name
+        for (int i = 0; i < result.length(); i++) {
+            char c = result.charAt(i);
+            if (result.charAt(i) == ',') pointer = true;
+            if (pointer) firstName.append(c);
+            else surname.append(c);
         }
+        return firstName.toString() + surname.toString();
+    }
+
+    //Translates String to language called kontinkieli
+    public String translate(String word) {
+        word.toLowerCase();
+        int pointer = 0;
+        String first = "ko";
+        String last = "";
+        char c;
+        while (pointer < word.length()) {
+            c = word.charAt(pointer);
+            if ("aeiouyåäö".contains(String.valueOf(c))) {
+                if (pointer < word.length() && c == word.charAt(pointer + 1)) {
+                    last += c;
+                    first += "o";
+                }
+                last += c;
+                first += word.substring(0, pointer);
+                pointer++;
+            }
+        }
+        last += "ntti";
+        return first + " " + last;
+    }
+}
     /*
 
     //Scanner scanner = new Scanner(s);
@@ -72,5 +96,3 @@ if (!"aeiouyåäö".contains(next) && !vowel)
 last.append("ntti");
 */
 
-
-}

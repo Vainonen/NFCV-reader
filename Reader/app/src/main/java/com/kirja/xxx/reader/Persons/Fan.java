@@ -36,12 +36,14 @@ public class Fan implements Person {
         JSONHandler.json = null;
         //tts.stop();
         tts.setSpeechRate(0.5f);
-        if (s.equals("Steel, Danielle")) s = "Tämä ei ole Daniel le Steell";
+
+        if (!s.equals("Steel, Danielle")) s = "Tämä ei ole Daniel le Steell";
         else {
             s = "aaaaaaaaaaaaaaaaaaah!";
-            tts.setSpeechRate(1.0f);
+            tts.setSpeechRate(0.1f);
             tts.setPitch(2.0f);
         }
+
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         tts.setPitch(0.5f);
     }
@@ -49,19 +51,24 @@ public class Fan implements Person {
     @Override
     public void chat() {
         String s = "";
-        if (counter == 0) {
-            s = "Tuokaa minulle. Daniel le Steell";
-            counter++;
-            tts.setSpeechRate(0.5f);
-            Log.i("order", "eka");
+        switch (counter) {
+            case (0): {
+                s = "Tuokaa minulle Daniel le Steell";
+                break;
+            }
+            case (1): {
+                s = "Missä viipyy... Danielle Steel?";
+                tts.setSpeechRate(1);
+                break;
+            }
+            case (2): {
+                s = "Minä haluan Daniel le Steelin";
+                break;
+            }
         }
-        else {
-            s = "Missä viipyy        Danielle Steel?";
-            Log.i("order", "toka");
-            counter = 0;
-            tts.setSpeechRate(1);
-        }
-
+        counter++;
+        if (counter > 2) counter = 0;
+        tts.setSpeechRate(0.5f);
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
     }
 
