@@ -1,4 +1,4 @@
-package com.kirja.xxx.reader;
+ package com.kirja.xxx.reader;
 
 import java.util.Scanner;
 

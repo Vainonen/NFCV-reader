@@ -17,6 +17,8 @@ import com.kirja.xxx.reader.Persons.Teenager;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +29,7 @@ public class TagReader extends AppCompatActivity {
     TextView textViewInfo, textViewTagInfo;
     LinearLayout linearLayout;
 
-    final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    //final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,6 @@ public class TagReader extends AppCompatActivity {
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        //MainActivity.person.chat();
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
@@ -81,6 +81,11 @@ public class TagReader extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
 
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {MainActivity.person.chat();}
+        }, 0, 15000);//put here time 1000 milliseconds=1 second
+        /*
         executorService.scheduleAtFixedRate(new Runnable() {
 
             @Override
@@ -89,21 +94,30 @@ public class TagReader extends AppCompatActivity {
                 //if (!MainActivity.person.speaking()) MainActivity.person.chat();
             }
         }, 0, 10, TimeUnit.SECONDS);
+        */
     }
-
 
     @Override
     public void onPause(){
         super.onPause();
-        MainActivity.person.shutUp();
-        executorService.shutdown();
+        //MainActivity.person.shutUp();
+        //try {executorService.shutdown();}
+        //catch (Exception e) {Log.e("executorService", "was interrupted");}
         /*
         try {
             executorService.awaitTermination(1, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            Log.e("InterruptedException", e.toString());
+            Log.e("InterruptedException", e.toString()
+            );
         }
         */
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //MainActivity.person.shutUp();
+        //executorService.shutdown();
     }
 
     private void getData(Tag tag) {

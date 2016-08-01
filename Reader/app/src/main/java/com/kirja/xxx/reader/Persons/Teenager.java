@@ -14,7 +14,7 @@ public class Teenager implements Person {
 
     TextToSpeech tts;
     ArrayList <String> books;
-    String currenISBN;
+    String currentISBN;
 
     public Teenager(Context context) {
         books = new ArrayList();
@@ -27,6 +27,7 @@ public class Teenager implements Person {
                     float pitch = 1.3f;
                     tts.setSpeechRate(speed);
                     tts.setPitch(pitch);
+                    chat();
                 }
             }
         });
@@ -52,12 +53,15 @@ public class Teenager implements Person {
         catch (Exception e) {
             Log.e("error", "language not found");
         }
-        if (books.contains(currenISBN)) s = "Olen lukenut jo tämän kursorisesti.";
+        if (currentISBN.equals(0)) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
+        if (books.contains(currentISBN)) s = "Olen lukenut jo tämän kursorisesti.";
+        if (JSONHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         tts.setLanguage(new Locale("fi"));
-        books.add(currenISBN);
+        if (!currentISBN.equals(0)) books.add(currentISBN);
     }
 
+    @Override
     public void chat() {
         String s = "Anna jotain luettavaa";
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
@@ -86,6 +90,6 @@ public class Teenager implements Person {
 
     @Override
     public void addISBN(String isbn) {
-        currenISBN = isbn;
+        currentISBN = isbn;
     }
 }

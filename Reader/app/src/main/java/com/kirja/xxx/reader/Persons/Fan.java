@@ -12,6 +12,7 @@ public class Fan implements Person {
 
     TextToSpeech tts;
     int counter = 0;
+    private String currentISBN;
 
     public Fan(Context context) {
 
@@ -20,10 +21,9 @@ public class Fan implements Person {
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
                     tts.setLanguage(new Locale("fi"));
-                    float speed = 0.5f;
                     float pitch = 0.5f;
-                    tts.setSpeechRate(speed);
                     tts.setPitch(pitch);
+                    chat();
                 }
             }
         });
@@ -34,11 +34,13 @@ public class Fan implements Person {
         String s = "";
         if (JSONHandler.json != null) s = JSONHandler.getTitle();
         JSONHandler.json = null;
-        //tts.stop();
+        //tts.stop();{
         tts.setSpeechRate(0.5f);
 
         if (!s.equals("Steel, Danielle")) s = "Tämä ei ole Daniel le Steell";
-        else {
+        if (currentISBN.equals(0)) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
+        if (JSONHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
+        if (s.equals("Steel, Danielle")) {
             s = "aaaaaaaaaaaaaaaaaaah!";
             tts.setSpeechRate(0.1f);
             tts.setPitch(2.0f);
@@ -46,7 +48,7 @@ public class Fan implements Person {
 
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         tts.setPitch(0.5f);
-    }
+        }
 
     @Override
     public void chat() {
@@ -54,6 +56,7 @@ public class Fan implements Person {
         switch (counter) {
             case (0): {
                 s = "Tuokaa minulle Daniel le Steell";
+                tts.setSpeechRate(0.5f);
                 break;
             }
             case (1): {
@@ -63,12 +66,12 @@ public class Fan implements Person {
             }
             case (2): {
                 s = "Minä haluan Daniel le Steelin";
+                tts.setSpeechRate(1.5f);
                 break;
             }
         }
         counter++;
         if (counter > 2) counter = 0;
-        tts.setSpeechRate(0.5f);
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
     }
 
@@ -82,6 +85,6 @@ public class Fan implements Person {
 
     @Override
     public void addISBN(String isbn) {
-        //not necessary property for this class
+        currentISBN = isbn;
     }
 }

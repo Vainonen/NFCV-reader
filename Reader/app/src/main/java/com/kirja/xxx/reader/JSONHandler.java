@@ -11,11 +11,13 @@ public class JSONHandler {
 
     public static JSONObject json;
     public static JSONArray records;
+    public static String results;
 
     public JSONHandler(String result) {
         Log.i("result", result);
         try {
             json = new JSONObject(result);
+            results = json.getString("resultCount");
             records = json.getJSONArray("records");
         } catch (Exception e) {
             Log.e("JSON error", e.toString());
@@ -55,5 +57,9 @@ public class JSONHandler {
             Log.e("JSON error", e.toString());
         }
         return ""; //returns empty String for Speech class
+    }
+
+    public static String getResults() {
+        return results;
     }
 }
