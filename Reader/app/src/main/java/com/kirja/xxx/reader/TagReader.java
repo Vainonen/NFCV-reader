@@ -100,7 +100,7 @@ public class TagReader extends AppCompatActivity {
     @Override
     public void onPause(){
         super.onPause();
-        //MainActivity.person.shutUp();
+        MainActivity.person.shutUp();
         //try {executorService.shutdown();}
         //catch (Exception e) {Log.e("executorService", "was interrupted");}
         /*
@@ -116,7 +116,7 @@ public class TagReader extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        //MainActivity.person.shutUp();
+        MainActivity.person.shutUp();
         //executorService.shutdown();
     }
 

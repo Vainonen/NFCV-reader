@@ -30,7 +30,8 @@ public class APICall {
     public void getData(Context c, String isbn) {
         //String url = "https://www.googleapis.com/books/v1/volumes?q=ISBN:" + isbn;
         //https://api.finna.fi/v1/search?lookfor=9789520110727&field[]=fullRecord
-        String url = "https://api.finna.fi/v1/search?lookfor=" + isbn;
+        //String url = "https://api.finna.fi/v1/search?lookfor=" + isbn;
+        String url = "https://api.finna.fi/v1/search?lookfor="+ isbn +"&field[]=fullRecord";
         context = c;
 
         if (!isConnected())

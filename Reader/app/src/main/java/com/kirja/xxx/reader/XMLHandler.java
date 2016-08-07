@@ -4,36 +4,20 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.Parser;
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
-
-public class JSONHandler {
+public class XMLHandler {
 
     public static JSONObject json;
     public static JSONArray records;
     public static String results;
     public static String xml;
 
-    public JSONHandler(String result) {
+    public XMLHandler(String result) {
         Log.i("result", result);
         try {
             json = new JSONObject(result);
@@ -103,14 +87,13 @@ public class JSONHandler {
                         String name = xpp.getName();
                         String value = xpp.getAttributeValue(0);
                         if (name.equals("datafield") && value.equals("300")) {
-                            Log.i("xml täällä", "täällä");
                             while (eventType != XmlPullParser.END_TAG) {
                                 eventType = xpp.next();
                                 if (eventType == XmlPullParser.START_TAG) {
                                     name = xpp.getName();
                                     value = xpp.getAttributeValue(0);
                                     if (name.equals("subfield") && value.equals("a")) {
-                                        eventType = xpp.next();
+                                         eventType = xpp.next();
                                         if (eventType == XmlPullParser.TEXT) {
                                             String marcpages = xpp.getText();
                                             Scanner sc = new Scanner(marcpages);
@@ -135,8 +118,6 @@ public class JSONHandler {
             Log.e("readerror", e.toString());
         }
         return pages;
-}
+    }
 
 
-
-}
