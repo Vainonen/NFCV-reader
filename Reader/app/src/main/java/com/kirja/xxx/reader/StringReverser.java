@@ -1,5 +1,7 @@
  package com.kirja.xxx.reader;
 
+import android.util.Log;
+
 import java.util.Scanner;
 
 public class StringReverser {
@@ -44,6 +46,7 @@ public class StringReverser {
             }
         }
         last += "ntti";
+        Log.i("sanat" , first + " " + last);
         return first + " " + last;
     }
 }

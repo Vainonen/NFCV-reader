@@ -1,5 +1,6 @@
 package com.kirja.xxx.reader;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -28,6 +29,7 @@ public class TagReader extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     TextView textViewInfo, textViewTagInfo;
     LinearLayout linearLayout;
+    APICall ac;
 
     //final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -42,6 +44,7 @@ public class TagReader extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
+        ac = new APICall();
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
             Toast.makeText(this,
@@ -100,7 +103,6 @@ public class TagReader extends AppCompatActivity {
     @Override
     public void onPause(){
         super.onPause();
-        MainActivity.person.shutUp();
         //try {executorService.shutdown();}
         //catch (Exception e) {Log.e("executorService", "was interrupted");}
         /*
@@ -112,14 +114,15 @@ public class TagReader extends AppCompatActivity {
         }
         */
     }
-
+/*
     @Override
     protected void onStop() {
         super.onStop();
+        Log.i("shutup", "shutup");
         MainActivity.person.shutUp();
         //executorService.shutdown();
     }
-
+*/
     private void getData(Tag tag) {
         NfcV nfcv = NfcV.get(tag);
 
@@ -149,7 +152,6 @@ public class TagReader extends AppCompatActivity {
             TextView tv = new TextView(this);
             tv.setText(isbn);
             linearLayout.addView(tv);
-            APICall ac = new APICall();
             ac.getData(this.getApplicationContext(), isbn);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Lukeminen epäonnistui!", Toast.LENGTH_SHORT).show();

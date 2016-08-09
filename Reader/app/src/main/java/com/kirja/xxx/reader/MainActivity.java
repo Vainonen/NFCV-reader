@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kirja.xxx.reader.Persons.Fan;
+import com.kirja.xxx.reader.Persons.Foreigner;
 import com.kirja.xxx.reader.Persons.Person;
 import com.kirja.xxx.reader.Persons.Teenager;
 
@@ -31,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static JSONHandler jh = null;
+    public static XMLHandler xh = null;
     public static Person person;
 
     @Override
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
         rg.setOrientation(LinearLayout.VERTICAL);
-        Button[] rb = new Button[2];
+        Button[] rb = new Button[3];
         for (int i = 0; i < rb.length; i++) {
             rb[i] = new Button(this);
             rg.addView(rb[i]);
@@ -51,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             rb[i].setTextSize(30);
         }
         rb[0].setText("Teini");
-        rb[1].setText("Romantikko");
+        rb[1].setText("Kontinkielinen");
+        rb[2].setText("Romantikko");
     }
 
     /*
@@ -63,6 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     */
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (person != null) person.shutUp();
+    }
+
+    @Override
     public void onClick(View v) {
         String id = Integer.toString(v.getId());
         switch (id) {
@@ -71,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case "1": {
+                person= new Foreigner(this.getApplicationContext());
+                break;
+            }
+            case "2": {
                 person = new Fan(this.getApplicationContext());
                 break;
             }

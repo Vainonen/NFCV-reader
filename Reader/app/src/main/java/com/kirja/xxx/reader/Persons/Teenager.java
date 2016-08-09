@@ -1,11 +1,13 @@
 package com.kirja.xxx.reader.Persons;
 
 import android.content.Context;
+import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import com.kirja.xxx.reader.JSONHandler;
 import com.kirja.xxx.reader.StringReverser;
+import com.kirja.xxx.reader.XMLHandler;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -38,14 +40,19 @@ public class Teenager implements Person {
         String s = "";
         String language = "";
 
-        if (JSONHandler.json != null) {
-            s = JSONHandler.getAuthor();
+        if (XMLHandler.json != null) {
+            s = XMLHandler.getAuthor();
+
             StringReverser sh = new StringReverser(s);
             s = sh.getReversedName();
-            s += "..." + JSONHandler.getTitle();
-            s +="... Mikä vithy tää on";
+            Log.i("tekijä", s);
+            s += "..." + XMLHandler.getTitle();
+            Log.i("teos", s);
+            if (XMLHandler.getPageNumber() > 300) s += "liian paksu...ei vittu jaksa lukea";
+            else s +="... Mikä vithy tää on";
         }
-        JSONHandler.json = null;
+        XMLHandler.json = null;
+        /*
         try {
             language = JSONHandler.getLanguage();
             tts.setLanguage(new Locale(language));
@@ -53,18 +60,20 @@ public class Teenager implements Person {
         catch (Exception e) {
             Log.e("error", "language not found");
         }
+        */
         if (currentISBN.equals(0)) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
         if (books.contains(currentISBN)) s = "Olen lukenut jo tämän kursorisesti.";
-        if (JSONHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
+        if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
+        Log.i("puhe", s);
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
-        tts.setLanguage(new Locale("fi"));
+        //tts.setLanguage(new Locale("fi"));
         if (!currentISBN.equals(0)) books.add(currentISBN);
     }
 
     @Override
     public void chat() {
         String s = "Anna jotain luettavaa";
-        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+        tts.speak(s, TextToSpeech.QUEUE_ADD, null);
     }
 /*
     @Override

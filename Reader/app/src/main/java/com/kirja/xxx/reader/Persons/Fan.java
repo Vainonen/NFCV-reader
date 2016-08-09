@@ -5,6 +5,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import com.kirja.xxx.reader.JSONHandler;
+import com.kirja.xxx.reader.XMLHandler;
 
 import java.util.Locale;
 
@@ -32,14 +33,14 @@ public class Fan implements Person {
     @Override
     public void speak() {
         String s = "";
-        if (JSONHandler.json != null) s = JSONHandler.getTitle();
-        JSONHandler.json = null;
-        //tts.stop();{
+        if (XMLHandler.json != null) s = JSONHandler.getTitle();
+        XMLHandler.json = null;
+
         tts.setSpeechRate(0.5f);
 
         if (!s.equals("Steel, Danielle")) s = "Tämä ei ole Daniel le Steell";
         if (currentISBN.equals(0)) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
-        if (JSONHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
+        if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
         if (s.equals("Steel, Danielle")) {
             s = "aaaaaaaaaaaaaaaaaaah!";
             tts.setSpeechRate(0.1f);
@@ -72,7 +73,7 @@ public class Fan implements Person {
         }
         counter++;
         if (counter > 2) counter = 0;
-        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+        tts.speak(s, TextToSpeech.QUEUE_ADD, null);
     }
 
     @Override

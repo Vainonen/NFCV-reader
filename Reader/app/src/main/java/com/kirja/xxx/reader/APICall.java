@@ -81,7 +81,7 @@ public class APICall {
         @Override
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
-            JSONHandler jh = new JSONHandler(result);
+            XMLHandler xh = new XMLHandler(result);
             MainActivity.person.speak();
         }
     }
