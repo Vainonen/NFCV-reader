@@ -26,7 +26,7 @@ public class XMLHandler {
             results = json.getString("resultCount");
             xml = records.getJSONObject(0).getString("fullRecord");
 
-            Log.i("xml", xml);
+            Log.i("results", results);
 
         } catch (Exception e) {
             Log.e("XML error", e.toString());
@@ -47,8 +47,6 @@ public class XMLHandler {
 
     //TODO: infinite loop if xml is malformed?
     private static String getDatafield(String number, String value) {
-
-
 
         String result = null;
         try {

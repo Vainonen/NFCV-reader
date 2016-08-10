@@ -40,7 +40,7 @@ public class Teenager implements Person {
         String s = "";
         String language = "";
 
-        if (XMLHandler.json != null) {
+        if (XMLHandler.json != null && !XMLHandler.getResults().equals("0")) {
             s = XMLHandler.getAuthor();
 
             StringReverser sh = new StringReverser(s);
@@ -49,7 +49,7 @@ public class Teenager implements Person {
             s += "..." + XMLHandler.getTitle();
             Log.i("teos", s);
             if (XMLHandler.getPageNumber() > 300) s += "liian paksu...ei vittu jaksa lukea";
-            else s +="... Mikä vithy tää on";
+            else s +="... Mikä vittu tää on";
         }
         XMLHandler.json = null;
         /*
@@ -62,7 +62,7 @@ public class Teenager implements Person {
         }
         */
         if (currentISBN.equals(0)) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
-        if (books.contains(currentISBN)) s = "Olen lukenut jo tämän kursorisesti.";
+        if (books.contains(currentISBN)) s = "Olen jo lukenut tämän kursorisesti.";
         if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
         Log.i("puhe", s);
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
@@ -73,7 +73,7 @@ public class Teenager implements Person {
     @Override
     public void chat() {
         String s = "Anna jotain luettavaa";
-        tts.speak(s, TextToSpeech.QUEUE_ADD, null);
+        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
     }
 /*
     @Override

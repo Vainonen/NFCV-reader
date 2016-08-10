@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,11 +40,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RadioGroup rg = new RadioGroup(this);
-        rg = (RadioGroup) findViewById(R.id.radiobuttons);
-        rg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT));
-        rg.setOrientation(LinearLayout.VERTICAL);
+        //RelativeLayout rl = (RelativeLayout) findViewById(R.id.rl);
+        RadioGroup rg = (RadioGroup) findViewById(R.id.radiobuttons);
+        rg.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT));
         Button[] rb = new Button[3];
         for (int i = 0; i < rb.length; i++) {
             rb[i] = new Button(this);

@@ -12,7 +12,7 @@ import java.util.Locale;
 public class Fan implements Person {
 
     TextToSpeech tts;
-    int counter = 0;
+    int counter = 2;
     private String currentISBN;
 
     public Fan(Context context) {
@@ -33,15 +33,18 @@ public class Fan implements Person {
     @Override
     public void speak() {
         String s = "";
-        if (XMLHandler.json != null) s = JSONHandler.getTitle();
-        XMLHandler.json = null;
+        if (XMLHandler.json != null) s = XMLHandler.getAuthor();
 
         tts.setSpeechRate(0.5f);
 
+        s = s.substring(0, 15); // trim the character '.' out of the string
+        Log.i("laskuri", s);
         if (!s.equals("Steel, Danielle")) s = "Tämä ei ole Daniel le Steell";
         if (currentISBN.equals(0)) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
         if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
+        Log.i("laskuri2", s);
         if (s.equals("Steel, Danielle")) {
+
             s = "aaaaaaaaaaaaaaaaaaah!";
             tts.setSpeechRate(0.1f);
             tts.setPitch(2.0f);
@@ -49,11 +52,13 @@ public class Fan implements Person {
 
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         tts.setPitch(0.5f);
+        XMLHandler.json = null;
         }
 
     @Override
     public void chat() {
         String s = "";
+        Log.i("laskuri", Integer.toString(counter));
         switch (counter) {
             case (0): {
                 s = "Tuokaa minulle Daniel le Steell";
@@ -73,7 +78,7 @@ public class Fan implements Person {
         }
         counter++;
         if (counter > 2) counter = 0;
-        tts.speak(s, TextToSpeech.QUEUE_ADD, null);
+        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override

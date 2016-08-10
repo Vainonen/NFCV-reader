@@ -17,7 +17,7 @@ public class StringReverser {
         StringBuilder firstName = new StringBuilder("");
         StringBuilder surname = new StringBuilder("");
         boolean pointer = false; //indicates when reading first name
-        for (int i = 0; i < result.length(); i++) {
+        for (int i = 0; i < result.length()-1; i++) {
             char c = result.charAt(i);
             if (result.charAt(i) == ',') pointer = true;
             if (pointer) firstName.append(c);
@@ -35,6 +35,7 @@ public class StringReverser {
         char c;
         while (pointer < word.length()) {
             c = word.charAt(pointer);
+            Log.i("sanat", "täällä");
             if ("aeiouyåäö".contains(String.valueOf(c))) {
                 if (pointer < word.length() && c == word.charAt(pointer + 1)) {
                     last += c;
@@ -42,8 +43,8 @@ public class StringReverser {
                 }
                 last += c;
                 first += word.substring(0, pointer);
-                pointer++;
             }
+            pointer++;
         }
         last += "ntti";
         Log.i("sanat" , first + " " + last);

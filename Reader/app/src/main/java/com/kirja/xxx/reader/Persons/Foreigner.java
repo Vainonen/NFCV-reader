@@ -42,16 +42,22 @@ public class Foreigner implements Person {
             StringReverser sh = new StringReverser(s);
             s = sh.getReversedName();
             Log.i("tekijä", s);
-            s += "..." + XMLHandler.getTitle();
+            s += " " + XMLHandler.getTitle();
             Log.i("teos", s);
         }
-        Scanner sc = new Scanner(s);
+        //Scanner sc = new Scanner(s);
         StringReverser sh = new StringReverser(s);
         String reverse = "";
+        /*
         while (sc.hasNext()) {
             reverse += sh.translate(sc.next());
         }
         Log.i("translation", reverse);
+        */
+        for (String word : s.split("\\s+")) {
+            reverse += sh.translate(word);
+        }
+
         XMLHandler.json = null;
         tts.speak(reverse, TextToSpeech.QUEUE_FLUSH, null);
     }
@@ -59,16 +65,22 @@ public class Foreigner implements Person {
     @Override
     public void chat() {
         String s = "anna kirja";
-        Scanner sc = new Scanner(s);
+        //Scanner sc = new Scanner(s);
         StringReverser sh = new StringReverser(s);
         String reverse = "";
 
+
+        for (String word : s.split("\\s+")) {
+            reverse += sh.translate(word);
+        }
+        /*
         while (sc.hasNext()) {
             String word = sc.next();
             reverse += sh.translate(word);
         }
+        */
         Log.i("reverse", reverse);
-        tts.speak(s, TextToSpeech.QUEUE_ADD, null);
+        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
