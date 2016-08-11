@@ -36,11 +36,11 @@ public class Foreigner implements Person {
     public void speak() {
         String s = "";
         String reverse = "";
-        StringReverser sh = new StringReverser(s);
+        StringReverser sh = new StringReverser();
         if (!currentISBN.equals("0")) {
             if (XMLHandler.json != null) {
                 s = XMLHandler.getAuthor();
-                s = sh.getReversedName();
+                s = sh.getReversedName(s);
                 Log.i("tekijä", s);
                 s += " " + XMLHandler.getTitle();
                 Log.i("teos", s);
@@ -58,11 +58,14 @@ public class Foreigner implements Person {
             XMLHandler.json = null;
         }
         if (currentISBN.equals("0")) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
+        s.trim();
         Log.i("translation", s);
+
         // translate result to "kontinkieli":
-        for (String word : s.split("\\s+")) {
+        for (String word : s.split("\\W+")) {
             reverse += sh.translate(word);
         }
+
         Log.i("translation", reverse);
         tts.speak(reverse, TextToSpeech.QUEUE_FLUSH, null);
     }
@@ -71,9 +74,8 @@ public class Foreigner implements Person {
     public void chat() {
         String s = "anna kirja";
         //Scanner sc = new Scanner(s);
-        StringReverser sh = new StringReverser(s);
+        StringReverser sh = new StringReverser();
         String reverse = "";
-
 
         for (String word : s.split("\\W+")) {
             reverse += sh.translate(word);
@@ -84,8 +86,9 @@ public class Foreigner implements Person {
             reverse += sh.translate(word);
         }
         */
+
         Log.i("reverse", reverse);
-        if (!tts.isSpeaking()) tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+        if (!tts.isSpeaking()) tts.speak(reverse, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override

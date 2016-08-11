@@ -42,13 +42,13 @@ public class Teenager implements Person {
 
         if (XMLHandler.json != null && !XMLHandler.getResults().equals("0") && !currentISBN.equals("0")) {
             s = XMLHandler.getAuthor();
-
-            StringReverser sh = new StringReverser(s);
-            s = sh.getReversedName();
+            StringReverser sh = new StringReverser();
+            s = sh.getReversedName(s);
             Log.i("tekijä", s);
             s += "..." + XMLHandler.getTitle();
             Log.i("teos", s);
-            if (XMLHandler.getPageNumber() > 300) s += "liian paksu...ei vittu jaksa lukea";
+            if (XMLHandler.getPageNumber() > 600) s += "liian paksu...ei vittu jaksa lukea";
+            if (XMLHandler.getPageNumber() < 100) s += "just sopivan kokonen...kiitosh";
             else s +="... Mikä vittu tää on";
             if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
         }
