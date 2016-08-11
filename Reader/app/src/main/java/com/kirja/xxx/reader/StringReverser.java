@@ -35,9 +35,9 @@ public class StringReverser {
         char c;
         while (pointer < word.length()) {
             c = word.charAt(pointer);
-            Log.i("sanat", "täällä");
+            Log.i("sanat", String.valueOf(c));
             if ("aeiouyåäö".contains(String.valueOf(c))) {
-                if (pointer < word.length() && c == word.charAt(pointer + 1)) {
+                if (pointer < word.length()-1 && c == word.charAt(pointer + 1)) {
                     last += c;
                     first += "o";
                 }

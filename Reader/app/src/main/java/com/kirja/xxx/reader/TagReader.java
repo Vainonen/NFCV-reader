@@ -152,7 +152,7 @@ public class TagReader extends AppCompatActivity {
             TextView tv = new TextView(this);
             tv.setText(isbn);
             linearLayout.addView(tv);
-            ac.getData(this.getApplicationContext(), isbn);
+            if (!isbn.equals("0")) ac.getData(this.getApplicationContext(), isbn);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Lukeminen epäonnistui!", Toast.LENGTH_SHORT).show();
             return;

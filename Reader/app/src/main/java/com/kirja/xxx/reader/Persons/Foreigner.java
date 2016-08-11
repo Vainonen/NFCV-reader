@@ -35,30 +35,35 @@ public class Foreigner implements Person {
     @Override
     public void speak() {
         String s = "";
-
-        if (XMLHandler.json != null) {
-            s = XMLHandler.getAuthor();
-
-            StringReverser sh = new StringReverser(s);
-            s = sh.getReversedName();
-            Log.i("tekijä", s);
-            s += " " + XMLHandler.getTitle();
-            Log.i("teos", s);
-        }
-        //Scanner sc = new Scanner(s);
-        StringReverser sh = new StringReverser(s);
         String reverse = "";
+        StringReverser sh = new StringReverser(s);
+        if (!currentISBN.equals("0")) {
+            if (XMLHandler.json != null) {
+                s = XMLHandler.getAuthor();
+                s = sh.getReversedName();
+                Log.i("tekijä", s);
+                s += " " + XMLHandler.getTitle();
+                Log.i("teos", s);
+            }
+            //Scanner sc = new Scanner(s);
+
         /*
         while (sc.hasNext()) {
             reverse += sh.translate(sc.next());
         }
         Log.i("translation", reverse);
         */
+
+
+            XMLHandler.json = null;
+        }
+        if (currentISBN.equals("0")) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
+        Log.i("translation", s);
+        // translate result to "kontinkieli":
         for (String word : s.split("\\s+")) {
             reverse += sh.translate(word);
         }
-
-        XMLHandler.json = null;
+        Log.i("translation", reverse);
         tts.speak(reverse, TextToSpeech.QUEUE_FLUSH, null);
     }
 
@@ -70,7 +75,7 @@ public class Foreigner implements Person {
         String reverse = "";
 
 
-        for (String word : s.split("\\s+")) {
+        for (String word : s.split("\\W+")) {
             reverse += sh.translate(word);
         }
         /*
@@ -80,7 +85,7 @@ public class Foreigner implements Person {
         }
         */
         Log.i("reverse", reverse);
-        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+        if (!tts.isSpeaking()) tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override

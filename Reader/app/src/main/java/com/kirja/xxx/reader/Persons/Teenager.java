@@ -40,7 +40,7 @@ public class Teenager implements Person {
         String s = "";
         String language = "";
 
-        if (XMLHandler.json != null && !XMLHandler.getResults().equals("0")) {
+        if (XMLHandler.json != null && !XMLHandler.getResults().equals("0") && !currentISBN.equals("0")) {
             s = XMLHandler.getAuthor();
 
             StringReverser sh = new StringReverser(s);
@@ -50,6 +50,7 @@ public class Teenager implements Person {
             Log.i("teos", s);
             if (XMLHandler.getPageNumber() > 300) s += "liian paksu...ei vittu jaksa lukea";
             else s +="... Mikä vittu tää on";
+            if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
         }
         XMLHandler.json = null;
         /*
@@ -61,9 +62,9 @@ public class Teenager implements Person {
             Log.e("error", "language not found");
         }
         */
-        if (currentISBN.equals(0)) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
+        if (currentISBN.equals("0")) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
         if (books.contains(currentISBN)) s = "Olen jo lukenut tämän kursorisesti.";
-        if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
+
         Log.i("puhe", s);
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         //tts.setLanguage(new Locale("fi"));
@@ -73,7 +74,7 @@ public class Teenager implements Person {
     @Override
     public void chat() {
         String s = "Anna jotain luettavaa";
-        tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+        if (!tts.isSpeaking()) tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
     }
 /*
     @Override
