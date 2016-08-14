@@ -32,27 +32,31 @@ public class Fan implements Person {
 
     @Override
     public void speak() {
-        String s = "";
+        String s = " ";
         if (!currentISBN.equals("0")) {
-            if (XMLHandler.json != null) s = XMLHandler.getAuthor();
-
+            if (XMLHandler.json != null && !XMLHandler.getResults().equals("0")) s = XMLHandler.getAuthor();
+            Log.i("laskuri2 tekijä", s);
             tts.setSpeechRate(0.5f);
 
-            s = s.substring(0, 15); // trim the character '.' out of the string
-            Log.i("laskuri", s);
-            if (!s.equals("Steel, Danielle")) s = "Tämä ei ole Daniel le Steell";
+            //s = s.substring(0, 15); // trim the character '.' out of the string
+            //Log.i("laskuri", s);
+            if (!s.equals("Steel, Danielle.")) s = "Tämä ei ole Daniel le Steell";
 
-            if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
+            if (XMLHandler.getResults().equals("0")) {
+                s = "ISBN-tunnusta ei löytynyt.";
+                Log.i("laskuri2", "ei oo");
+            }
             Log.i("laskuri2", s);
-            if (s.equals("Steel, Danielle")) {
+            if (s.equals("Steel, Danielle.")) {
 
-                s = "aaaaaaaaaaaaaaaaaaah!";
+                //s = "aaaaaaaaaaaaaaaaaaah!";
+                s="aaaah";
                 tts.setSpeechRate(0.1f);
                 tts.setPitch(2.0f);
             }
-            XMLHandler.json = null;
         }
         if (currentISBN.equals("0")) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
+        XMLHandler.json = null;
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         tts.setPitch(0.5f);
 

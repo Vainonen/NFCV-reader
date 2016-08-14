@@ -40,16 +40,17 @@ public class Teenager implements Person {
         String s = "";
         String language = "";
 
-        if (XMLHandler.json != null && !XMLHandler.getResults().equals("0") && !currentISBN.equals("0")) {
+        //if (XMLHandler.json != null && !XMLHandler.getResults().equals("0") && !currentISBN.equals("0")) {
+        if (XMLHandler.json != null && !currentISBN.equals("0")) {
             s = XMLHandler.getAuthor();
             StringReverser sh = new StringReverser();
             s = sh.getReversedName(s);
             Log.i("tekijä", s);
             s += "..." + XMLHandler.getTitle();
             Log.i("teos", s);
-            if (XMLHandler.getPageNumber() > 600) s += "liian paksu...ei vittu jaksa lukea";
+            if (XMLHandler.getPageNumber() > 400) s += "liian paksu...ei vittu jaksa lukea";
             if (XMLHandler.getPageNumber() < 100) s += "just sopivan kokonen...kiitosh";
-            else s +="... Mikä vittu tää on";
+            if ((XMLHandler.getPageNumber() > 99) && (XMLHandler.getPageNumber() < 401)) s +="... Mikä vittu tää on";
             if (XMLHandler.getResults().equals("0")) s = "ISBN-tunnusta ei löytynyt.";
         }
         XMLHandler.json = null;
@@ -68,7 +69,7 @@ public class Teenager implements Person {
         Log.i("puhe", s);
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         //tts.setLanguage(new Locale("fi"));
-        if (!currentISBN.equals(0)) books.add(currentISBN);
+        if (!currentISBN.equals("0")) books.add(currentISBN);
     }
 
     @Override

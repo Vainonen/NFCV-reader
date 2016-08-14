@@ -23,6 +23,7 @@ public class StringReverser {
     //Translates String to language called kontinkieli
     public String translate(String word) {
         word.toLowerCase();
+        if (word.equals(" ")) return "";
         int pointer = 0;
         String first = "ko";
         String last = "";

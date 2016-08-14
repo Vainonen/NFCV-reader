@@ -22,8 +22,8 @@ public class XMLHandler {
         Log.i("result", result);
         try {
             json = new JSONObject(result);
-            records = json.getJSONArray("records");
             results = json.getString("resultCount");
+            records = json.getJSONArray("records");
             xml = records.getJSONObject(0).getString("fullRecord");
 
             Log.i("results", results);

@@ -38,11 +38,11 @@ public class Foreigner implements Person {
         String reverse = "";
         StringReverser sh = new StringReverser();
         if (!currentISBN.equals("0")) {
-            if (XMLHandler.json != null) {
+            if (XMLHandler.json != null && !XMLHandler.getResults().equals("0")) {
                 s = XMLHandler.getAuthor();
                 s = sh.getReversedName(s);
-                Log.i("tekijä", s);
                 s += " " + XMLHandler.getTitle();
+                //Log.i("tekijä", s);
                 Log.i("teos", s);
             }
             //Scanner sc = new Scanner(s);
@@ -58,14 +58,14 @@ public class Foreigner implements Person {
             XMLHandler.json = null;
         }
         if (currentISBN.equals("0")) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
-        s.trim();
-        Log.i("translation", s);
+        s = s.trim();
 
         // translate result to "kontinkieli":
         for (String word : s.split("\\W+")) {
             reverse += sh.translate(word);
         }
 
+        XMLHandler.json = null;
         Log.i("translation", reverse);
         tts.speak(reverse, TextToSpeech.QUEUE_FLUSH, null);
     }

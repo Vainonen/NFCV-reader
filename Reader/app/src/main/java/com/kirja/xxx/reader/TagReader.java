@@ -48,7 +48,7 @@ public class TagReader extends AppCompatActivity {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
             Toast.makeText(this,
-                    "NFC NOT supported on this devices!",
+                    "Laitteessa ei ole NFC-toimintoa!",
                     Toast.LENGTH_LONG).show();
             finish();
         } else if (!nfcAdapter.isEnabled()) {
@@ -148,10 +148,10 @@ public class TagReader extends AppCompatActivity {
             // ISBN location on the NFCV tag:
             userdata = Arrays.copyOfRange(userdata, 24, 30);
             String isbn = new BigInteger(userdata).toString();
-            MainActivity.person.addISBN(isbn);
             TextView tv = new TextView(this);
             tv.setText(isbn);
             linearLayout.addView(tv);
+            MainActivity.person.addISBN(isbn);
             if (!isbn.equals("0")) ac.getData(this.getApplicationContext(), isbn);
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "Lukeminen epäonnistui!", Toast.LENGTH_SHORT).show();
