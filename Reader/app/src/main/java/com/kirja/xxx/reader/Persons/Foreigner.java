@@ -3,6 +3,7 @@ package com.kirja.xxx.reader.Persons;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.kirja.xxx.reader.StringReverser;
 import com.kirja.xxx.reader.XMLHandler;
@@ -33,7 +34,7 @@ public class Foreigner implements Person {
     }
 
     @Override
-    public void speak() {
+    public String speak() {
         String s = "";
         String reverse = "";
         StringReverser sh = new StringReverser();
@@ -42,18 +43,7 @@ public class Foreigner implements Person {
                 s = XMLHandler.getAuthor();
                 s = sh.getReversedName(s);
                 s += " " + XMLHandler.getTitle();
-                //Log.i("tekijä", s);
-                Log.i("teos", s);
             }
-            //Scanner sc = new Scanner(s);
-
-        /*
-        while (sc.hasNext()) {
-            reverse += sh.translate(sc.next());
-        }
-        Log.i("translation", reverse);
-        */
-
 
             XMLHandler.json = null;
         }
@@ -66,29 +56,22 @@ public class Foreigner implements Person {
         }
 
         XMLHandler.json = null;
-        Log.i("translation", reverse);
         tts.speak(reverse, TextToSpeech.QUEUE_FLUSH, null);
+        return reverse;
     }
 
     @Override
-    public void chat() {
+    public String chat() {
         String s = "anna kirja";
-        //Scanner sc = new Scanner(s);
         StringReverser sh = new StringReverser();
         String reverse = "";
 
         for (String word : s.split("\\W+")) {
             reverse += sh.translate(word);
         }
-        /*
-        while (sc.hasNext()) {
-            String word = sc.next();
-            reverse += sh.translate(word);
-        }
-        */
 
-        Log.i("reverse", reverse);
         if (!tts.isSpeaking()) tts.speak(reverse, TextToSpeech.QUEUE_FLUSH, null);
+        return reverse;
     }
 
     @Override

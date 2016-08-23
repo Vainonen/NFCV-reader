@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.kirja.xxx.reader.JSONHandler;
 import com.kirja.xxx.reader.StringReverser;
@@ -36,7 +37,7 @@ public class Teenager implements Person {
     }
 
     @Override
-    public void speak() {
+    public String speak() {
         String s = "";
         String language = "";
 
@@ -66,30 +67,18 @@ public class Teenager implements Person {
         if (currentISBN.equals("0")) s = "Tähän ei ole syötetty ISBN-tunnusta...Miksi?";
         if (books.contains(currentISBN)) s = "Olen jo lukenut tämän kursorisesti.";
 
-        Log.i("puhe", s);
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         //tts.setLanguage(new Locale("fi"));
         if (!currentISBN.equals("0")) books.add(currentISBN);
+        return s;
     }
 
     @Override
-    public void chat() {
+    public String chat() {
         String s = "Anna jotain luettavaa";
         if (!tts.isSpeaking()) tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+        return s;
     }
-/*
-    @Override
-    public void speakResult(JSONHandler jh) {
-        float speed = 1;
-        float pitch = 1;
-        tts.setSpeechRate(speed);
-        tts.setPitch(pitch);
-        String speech = jh.getTitle();
-        tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-        Log.i("puhe", speech);
-    }
-*/
-
 
     @Override
     public void shutUp() {

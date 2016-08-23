@@ -82,7 +82,8 @@ public class APICall {
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
             XMLHandler xh = new XMLHandler(result);
-            MainActivity.person.speak();
+            String speech = MainActivity.person.speak();
+            Toast.makeText(context, speech, Toast.LENGTH_SHORT).show();
         }
     }
 }

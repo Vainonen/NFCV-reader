@@ -3,6 +3,7 @@ package com.kirja.xxx.reader.Persons;
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.kirja.xxx.reader.JSONHandler;
 import com.kirja.xxx.reader.XMLHandler;
@@ -16,7 +17,6 @@ public class Fan implements Person {
     private String currentISBN;
 
     public Fan(Context context) {
-
         tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -31,7 +31,7 @@ public class Fan implements Person {
     }
 
     @Override
-    public void speak() {
+    public String speak() {
         String s = " ";
         if (!currentISBN.equals("0")) {
             if (XMLHandler.json != null && !XMLHandler.getResults().equals("0")) s = XMLHandler.getAuthor();
@@ -59,11 +59,11 @@ public class Fan implements Person {
         XMLHandler.json = null;
         tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
         tts.setPitch(0.5f);
-
+        return s;
         }
 
     @Override
-    public void chat() {
+    public String chat() {
         String s = "";
         Log.i("laskuri", Integer.toString(counter));
         switch (counter) {
@@ -86,6 +86,7 @@ public class Fan implements Person {
         counter++;
         if (counter > 2) counter = 0;
         if (!tts.isSpeaking()) tts.speak(s, TextToSpeech.QUEUE_FLUSH, null);
+        return s;
     }
 
     @Override
